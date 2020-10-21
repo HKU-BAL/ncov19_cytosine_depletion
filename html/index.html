@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SARS-CoV-2 Cytosine Attenuation</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">-->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.w3-sidebar a,body,h1,h2,h3,h4,h5,h6,.w3-wide{font-family: "Roboto", sans-serif}
+nav.border{border-right-style: solid; border-right-color:gray;}
+div.w3-main{padding-left: 50px;}
+.container{display:flex; flex-direction: column;}
+</style>
+<script>
+function onLoad() {
+    document.getElementById("content").src = "./intro.html?timestamp=" + Date.now();
+}
+</script>
+
+</head>
+
+<!-- Sidebar/menu -->
+<body class="w3-content" style="max-width:1200px;" onload="onLoad()">
+<nav class="w3-sidebar w3-bar-block w3-top w3-collapse border" style="z-index:3;width:250px;background-color: #eeeeee" id="mySidebar">
+    <div class="w3-container"  style="padding-left: 20px;">
+    <div class="w3-container w3-display-container w3-padding-16">
+        <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+        <h3 class="w3-wide"><b>SARS-CoV-2 Cytosine Attenuation</b></h3>
+    </div>
+
+    <div class="w3-large w3-text-grey" style="padding-top: 40px; padding-bottom:10px">
+        <a onclick="changeContent('intro')" id="button_intro" class="w3-bar-item w3-button">About this site</a>
+    </div>
+
+    <div class="w3-large w3-text-grey" style="padding-bottom:10px">
+        <a onclick="changeContent('info')" id="button_info" class="w3-bar-item w3-button">Biological background</a>
+    </div>
+
+    <div class="w3-large w3-text-grey" style="padding-bottom:10px">
+        <a onclick="changeContent('usage')" id="button_usage" class="w3-bar-item w3-button">Usage</a>
+    </div>
+
+    <a onclick="show_list()" href="javascript:void(0)" class="w3-button w3-block w3-text-grey w3-left-align w3-large" id="plots">
+        Plots <i class="fa fa-caret-down"></i>
+    </a>
+    <div id="plot_list" class="w3-padding-large w3-medium w3-text-grey w3-hide w3-show">
+        <a onclick="changeContent('mono')" id="button_mono" class="w3-bar-item w3-button graph-button">Mononucleotide</a>
+        <a onclick="changeContent('di')" id="button_di" class="w3-bar-item w3-button graph-button">Dinucleotide</a>
+        <a onclick="changeContent('tri')" id="button_tri" class="w3-bar-item w3-button graph-button">Trinucleotide</a>
+
+    </div>
+    </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+    <div class="w3-bar-item w3-padding-24 w3-wide"></div>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+</header>
+  
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main Content -->
+<div class="w3-main w3-white border" style="margin-left:250px; padding-left:0px">
+    <div class="w3-hide-large" style="margin-top:100px"></div>
+    <header class="w3-xlarge w3-container" style="padding-left: 50px;">
+        <h2><p class="w3-middle" id="content_title">About this site</p></h2>
+    </header>
+
+    <div class="w3-container w3-hide" id="selector" style="padding-left:30px">
+        <div class="w3-row">
+            <a href="javascript:void(0)" onclick="changeGene('Whole')" class="w3-bar-item w3-button gene-button">Whole genome</a>
+            <a href="javascript:void(0)" onclick="changeGene('orf1ab')" class="w3-bar-item w3-button gene-button">orf1ab</a>
+            <a href="javascript:void(0)" onclick="changeGene('S')" class="w3-bar-item w3-button gene-button">S</a>
+            <a href="javascript:void(0)" onclick="changeGene('NS3')" class="w3-bar-item w3-button gene-button">NS3</a>
+            <a href="javascript:void(0)" onclick="changeGene('E')" class="w3-bar-item w3-button gene-button">E</a>
+            <a href="javascript:void(0)" onclick="changeGene('M')" class="w3-bar-item w3-button gene-button">M</a>
+            <a href="javascript:void(0)" onclick="changeGene('NS6')" class="w3-bar-item w3-button gene-button">NS6</a>
+            <a href="javascript:void(0)" onclick="changeGene('NS7a')" class="w3-bar-item w3-button gene-button">NS7a</a>
+            <a href="javascript:void(0)" onclick="changeGene('NS7b')" class="w3-bar-item w3-button gene-button">NS7b</a>
+            <a href="javascript:void(0)" onclick="changeGene('NS8')" class="w3-bar-item w3-button gene-button">NS8</a>
+            <a href="javascript:void(0)" onclick="changeGene('N')" class="w3-bar-item w3-button gene-button">N</a>
+            <!--<a href="javascript:void(0)" onclick="changeGene('ORF10')" class="w3-bar-item w3-button gene-button">ORF10</a>-->
+        </div>
+        
+        <div class="w3-row w3-border-top" id="plot_hover">
+            
+        </div>
+    </div>
+    
+    <div class="container">
+        <iframe id="content" src="./intro.html" height="600" scrolling="yes"  style="border:none" seamless></iframe>
+    </div>
+    
+</div>
+
+<script>
+
+var gene = "Whole";
+var plot = "All";
+var type = "mono";
+
+function highlight() {
+    var gene_buttons = document.getElementsByClassName("gene-button");
+    var gene;
+    if (this.gene == "Whole") {
+        gene = "Whole genome";
+    } else {
+        gene = this.gene;
+    }
+    for (var i=0; i<gene_buttons.length; i++) {
+        if (gene_buttons[i].innerHTML == gene) {
+            gene_buttons[i].style.backgroundColor = "lightgray";
+        } else {
+            gene_buttons[i].style.backgroundColor = "white";
+        }
+    }
+    var plot_buttons = document.getElementsByClassName("plot-button");
+    for (var i=0; i<plot_buttons.length; i++) {
+        if (plot_buttons[i].innerHTML.replace(" ", "_") == this.plot) {
+            plot_buttons[i].style.backgroundColor = "lightgray";
+        } else {
+            plot_buttons[i].style.backgroundColor = "white";
+        }
+    }
+}
+
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";   
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+function show_list() {
+    var x = document.getElementById("plot_list")
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+function changeGene(gene) {
+    this.gene = gene;
+    highlight();
+    document.getElementById("content").src = "./plots/" + gene + "/" + type + "/" + plot + ".html";
+    if (document.getElementById("content").src.indexOf('timestamp') > -1){
+        document.getElementById("content").src = document.getElementById("content").src.replace(/timestamp=[^&]+/, 'timestamp=' + Date.now());
+    } else {
+        document.getElementById("content").src += (document.getElementById("content").src.indexOf('?') > -1 ? "&" : "?") + 'timestamp=' + Date.now();
+    }
+}
+
+function changePlot(plot) {
+    this.plot = plot;
+    highlight();
+    document.getElementById("content").src = "./plots/" + gene + "/" + type + "/" + plot + ".html";
+    if (document.getElementById("content").src.indexOf('timestamp') > -1){
+        document.getElementById("content").src = document.getElementById("content").src.replace(/timestamp=[^&]+/, 'timestamp=' + Date.now());
+    } else {
+        document.getElementById("content").src += (document.getElementById("content").src.indexOf('?') > -1 ? "&" : "?") + 'timestamp=' + Date.now();
+    }
+}
+
+function getInnerHTMLby(type) {
+    if (type == "mono") {
+        array = ["All", "A", "C", "G", "T"];
+    } else {
+        array = ["All", "with_C", "without_C"];
+    }
+
+    html = "";
+
+    for (var i=0; i<array.length; i++) {
+        html += `<a href="javascript:void(0)" onclick="changePlot('` + array[i] + `')" class="w3-bar-item w3-button plot-button">` + array[i].replace("_", " ") + '</a>';
+    }
+    return html;
+}
+
+function changeContent(id) {
+    var x = document.getElementById("button_"+id);
+    var name = x.innerHTML;
+    if (x.className.indexOf("graph-button") != -1) {        
+        this.gene = "S";
+        if (id == "mono") {
+            this.plot = "C";
+        } else {
+            this.plot = "with_C";
+        }
+        this.type = id;
+        if (document.getElementById("selector").className.indexOf("w3-show") == -1) {
+            document.getElementById("selector").className += " w3-show";
+        }
+        document.getElementById("content").src = "./plots/" + this.gene + "/" + this.type + "/" + this.plot + ".html";
+        document.getElementById("plot_hover").innerHTML = getInnerHTMLby(id);
+        highlight();
+    } else {
+        if (document.getElementById("selector").className.indexOf("w3-show") != -1){
+            document.getElementById("selector").className = document.getElementById("selector").className.replace(" w3-show", "");
+        }
+        document.getElementById("content").src = "./" + id + ".html";
+    }
+    document.getElementById("content_title").innerHTML = name;
+    if (document.getElementById("content").src.indexOf('timestamp') > -1){
+        document.getElementById("content").src = document.getElementById("content").src.replace(/timestamp=[^&]+/, 'timestamp=' + Date.now());
+    } else {
+        document.getElementById("content").src += (document.getElementById("content").src.indexOf('?') > -1 ? "&" : "?") + 'timestamp=' + Date.now();
+    }
+        
+        
+    window.scrollTo(0,0);
+}
+
+</script>
+
+</body>
+</html>
+
+
+

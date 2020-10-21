@@ -1,0 +1,29 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+    <script type="text/javascript" src="script.js"> </script>
+
+</head>
+<body onload='onLoad()'>
+    <div class="w3-container" style="padding-left: 50px;">
+        <h3>In short, what is this site about?</h3> <br>
+        <h4>This site provides a tracking of the composition of nucleotides in SARS-CoV-2 strains. </h4>
+        <h4>Click on the plots in the sidebar and you will see the composition changes along the time. The composition of mono-, di-, and tri-nucleotide are shown. We used the gene annotation of the <a href="https://www.ncbi.nlm.nih.gov/nuccore/MN996528">WIV04</a> strain.</h4>
+        <h4>The SARS-CoV-2 starins are retrieved from <a href="https://www.gisaid.org/">GISAID</a> platform. While we keep adding in more strains, a full list of references will be provided per the time you have requested. Please send your request to rbluo@cs.hku.hk.</h4>
+
+	<div class="w3-bottom" id="update_info"></div>
+    </div>
+</body>
+
+</html>
+
+<script type="text/javascript"> 
+
+    function onLoad() {
+        var date_count = getDateAndCount();
+        document.getElementById('update_info').innerHTML = "<h5>Currently the plot consists of data from " + date_count[1] + " sequences, last update was on " + date_count[0] + ".</h5>";
+    }
+    
+</script>
