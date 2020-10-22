@@ -6,10 +6,11 @@
  git clone https://github.com/HKU-BAL/ncov19_cytosine_attenuation.git
  cd ncov19_cytosine_attenuation/
  conda env create -f environment.yml
+ conda activate ncov19-ca
  npm install
  ```
  
- [https://github.com/nextstrain/ncov](Nextstrain) is also required, please follow the installation guide in the github page.
+ [https://github.com/nextstrain/ncov](Nextstrain) is also required, please follow the installation guide in the page.
 
 ## Basic Usage
 
