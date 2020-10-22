@@ -18,8 +18,8 @@
 
 ## Important notes
 
- - All scripts modify files under the `base_folder`, which is defined and if needed, should be modified in both `params.py` and `crawler.ts`. Default is inside `download_data/` of this directory.
+ - All scripts modify files under the `base_folder`, which is defined and if needed, should be modified in both `params.py` and `crawler.ts`. Default is inside `download_data/` under this directory.
  - The repository of [https://github.com/nextstrain/ncov](Nextstrain/ncov) need to be referenced in `params.py` after the `ncov_folder` variable.
- - `fasta/` stores the `.fasta` and `.info` retrieved directly from GISAID.
- - `aligned_fasta/` stores the aligned fasta against the reference.
- - `processed_fasta/` stores the raw sequence from `fasta` that is qualified (sequence length>29k, N<5%), while `backup_fasta/` stores those that is not.
+ - `base_folder/fasta/` stores the `.fasta` and `.info` retrieved directly from GISAID.
+ - `base_folder/aligned_fasta/` stores the aligned fasta against the reference.
+ - `base_folder/processed_fasta/` stores the raw sequence from `fasta` that is qualified (sequence length>29k, N<5%), while `base_folder/backup_fasta/` stores those that is not.
