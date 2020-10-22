@@ -4,9 +4,9 @@ import * as readline from 'readline';
 
 import { LoadEvent } from 'puppeteer';
 
-const createDirectory = (folderPath: string) => fs.existsSync(folderPath) || fs.mkdirSync(folderPath);
-
 const PATH = "download_data";
+
+const createDirectory = (folderPath: string) => fs.existsSync(folderPath) || fs.mkdirSync(folderPath);
 
 const readIndex = async(fn: string) => {
 
@@ -125,12 +125,6 @@ const main = async() => {
             const seq_length: number = await page.evaluate((i: number) => {
                 return parseInt(document.querySelectorAll('div[cid] .yui-dt-data .yui-dt-rec')[i].querySelectorAll('td')[7].textContent, 10);
             }, i);
-            
-            const month = date.slice(5,7)
-            
-            if (month != "05" && month != "06" && month != "07") {
-                continue;
-            }
 
             // get coordinate of item and click
             const { y, x }: any = await page.evaluate((i: number) => {
