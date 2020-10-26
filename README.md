@@ -1,10 +1,10 @@
-# ncov19_cytosine_attenuation
+# ncov19_cytosine_depletion
 
 ## Installation with conda
 
  ```
- git clone https://github.com/HKU-BAL/ncov19_cytosine_attenuation.git
- cd ncov19_cytosine_attenuation/
+ git clone https://github.com/HKU-BAL/ncov19_cytosine_depletion.git
+ cd ncov19_cytosine_depletion/
  conda env create -f environment.yml
  conda activate ncov19-ca
  npm install
