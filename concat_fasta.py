@@ -7,7 +7,7 @@ from params import base_folder
 
 today = str(date.today())
 
-def clear_folder(folder):
+def clean_folder(folder):
     
     p = subprocess.Popen(shlex.split(f"ls {base_folder}/{folder}/temp/"), stdout=subprocess.PIPE)
     fwf = open(f"{base_folder}/{folder}/{today}.fasta", "a")
@@ -15,6 +15,7 @@ def clear_folder(folder):
 
     for line in p.stdout:
         line = line.decode("utf-8").strip()
+        file_name = f"{base_folder}/{folder}/temp/{line}"
         if ".fasta" in line:
             with open(f"{base_folder}/{folder}/temp/{line}", "r") as fr:
                 for line in fr:
@@ -26,13 +27,21 @@ def clear_folder(folder):
                 for line in fr:
                     fwi.write(f"{line.strip()}\n")
 
-    print(f"rm {base_folder}/{folder}/temp/*")
-    os.system(f"rm {base_folder}/{folder}/temp/*")
+        os.remove(file_name)
+
+def clear_folder(folder):
+
+    p = subprocess.Popen(shlex.split(f"ls {base_folder}/{folder}/"), stdout=subprocess.PIPE)
+
+    for line in p.stdout:
+        line = line.decode("utf-8").strip()
+        file_name = f"{base_folder}/{folder}/{line}"
+        os.remove(file_name)
 
 def main():
-    clear_folder("processed_fasta")
-    clear_folder("backup_fasta")
-    
+    clean_folder("processed_fasta")
+    clean_folder("backup_fasta")
+    clear_folder("aligned_fasta")
 
 if __name__ == "__main__":
     main()

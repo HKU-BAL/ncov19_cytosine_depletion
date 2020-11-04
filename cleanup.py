@@ -4,11 +4,31 @@ import subprocess
 import shlex
 from utils import replace_by_dict, perm
 from params import base_folder
+from datetime import date
+
+today = date.today()
 
 def fasta_qualify(string):
     if len(string) < 20000:
         return False
     if string.count("N") / len(string) > 0.05:
+        return False
+
+    return True
+
+def is_valid_date(date_list):
+    if len(date_list) != 3:
+        return True
+
+    YEAR, MONTH, DAY = date_list
+
+    if DAY == "XX":
+        return True
+
+    if not YEAR.isdigit() or not MONTH.isdigit() or not DAY.isdigit():
+        return True
+
+    if int(YEAR) >= today.year and int(MONTH) >= today.month and int(DAY) > today.day:
         return False
 
     return True
@@ -101,40 +121,42 @@ def main():
             info_string = info_string.split('\n')
             date = info_string[0].strip().split("-")
 
-            for i in range(3-len(date)):
-                date.append("*")
+            if is_valid_date(date):
 
-            host = info_string[1].replace(" ", "_")
+                for i in range(3-len(date)):
+                    date.append("*")
 
-            location_list = [a.strip().replace(" ", "_") for a in info_string[2].split("/")]
-            location = ".".join(location_list)
+                host = info_string[1].replace(" ", "_")
 
-            p.close()
+                location_list = [a.strip().replace(" ", "_") for a in info_string[2].split("/")]
+                location = ".".join(location_list)
 
-            # For each gene, count the number of existence of nucleotides in the sequence
-            for gene, pos_pair in gene_dict.items():
+                p.close()
 
-                gene_seq = string[pos_pair[0]:pos_pair[1]]
+                # For each gene, count the number of existence of nucleotides in the sequence
+                for gene, pos_pair in gene_dict.items():
 
-                count_list = []
-                for i in range(3):
-                    count_list.append({})
-                    for j in perm(i+1):
-                        count_list[i][j] = 0
+                    gene_seq = string[pos_pair[0]:pos_pair[1]]
+
+                    count_list = []
+                    for i in range(3):
+                        count_list.append({})
+                        for j in perm(i+1):
+                            count_list[i][j] = 0
 
 
-                for i in range(3):
-                    for j in range(len(gene_seq)-i):
-                        if gene_seq[j:j+i+1] in count_list[i]:
-                            count_list[i][gene_seq[j:j+i+1]] += 1
+                    for i in range(3):
+                        for j in range(len(gene_seq)-i):
+                            if gene_seq[j:j+i+1] in count_list[i]:
+                                count_list[i][gene_seq[j:j+i+1]] += 1
 
-                write_string = f"{fasta[:-6]}\t{date[0]}\t{date[1]}\t{date[2]}\t{host}\t{location}"
+                    write_string = f"{fasta[:-6]}\t{date[0]}\t{date[1]}\t{date[2]}\t{host}\t{location}"
 
-                for i in range(3):
-                    for seq in perm(i+1):
-                        write_string = f"{write_string}\t{count_list[i][seq]}"
+                    for i in range(3):
+                        for seq in perm(i+1):
+                            write_string = f"{write_string}\t{count_list[i][seq]}"
 
-                gene_write_string_dict[gene].append(write_string)
+                    gene_write_string_dict[gene].append(write_string)
 
             p = subprocess.Popen(shlex.split(f"mv {base_folder}/fasta/{fasta[:-6]}.fasta {base_folder}/processed_fasta/temp"), stdout=subprocess.PIPE)
             p.communicate()

@@ -16,7 +16,7 @@ def count_and_output(info_path, output_path):
         line = line.strip().split()
         #ID year month date host location a c g t aa ac ag	at ca ... aaa aac aag ...
         if len(line[6:]) < 84:
-            print(line)
+            #print(line)
             continue
         ID, YEAR, MONTH, DATE, HOST, LOCATION = line[:6]
         count_dict = extract_from_list(line[6:])
