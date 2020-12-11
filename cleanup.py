@@ -28,7 +28,11 @@ def is_valid_date(date_list):
     if not YEAR.isdigit() or not MONTH.isdigit() or not DAY.isdigit():
         return True
 
-    if int(YEAR) >= today.year and int(MONTH) >= today.month and int(DAY) > today.day:
+    if int(YEAR) > today.year:
+        return False
+    elif int(YEAR) == today.year and int(MONTH) > today.month:
+        return False
+    elif int(YEAR) == today.year and int(MONTH) == today.month and int(DAY) > today.day:
         return False
 
     return True
